@@ -36,6 +36,7 @@ df = (
     .assign(idx=lambda x: (~x.Date.str.contains('^$')).cumsum())
     .groupby('idx')
     .apply(lambda x: x.apply(lambda y: ' '.join(y.fillna('').astype(str))).str.strip())
+    .apply((lambda x: x.str.replace(',', '')))
     .reset_index(drop=True)
     .drop(['idx', 'Status', 'Reference', 'Details'], axis=1)
     .assign(
